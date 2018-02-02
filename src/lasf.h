@@ -391,7 +391,7 @@ typedef struct {
   double x_t;
   double y_t;
   double z_t;
-} lasf_pnts;
+} lasf_pnts5;
 
 
 // The LAS Point Structure version 6
@@ -487,7 +487,7 @@ typedef struct {
   double x_t;
   double y_t;
   double z_t;
-} lasf_pnts10;
+} lasf_pnts;
 
 // lasf Structs
 
@@ -630,7 +630,7 @@ int
 lasf_put_header_gensoftware(int* lasfhid, const char *hgensoft);
 
 int
-  lasf_put_header_fileday(int* lasfhid, unsigned short hday);
+lasf_put_header_fileday(int* lasfhid, unsigned short hday);
 
 int
 lasf_put_header_fileyear(int* lasfhid, unsigned short hyear);
@@ -688,9 +688,75 @@ lasf_open_vlheader(int* lasfid, int* lasfhid, int* lasfvlhid, int seekn);
 
 int
 lasf_get_vlheader(int* lasfvlhid, lasf_vlheader* lasfvlh);
-  
+
+int
+lasf_read_v0point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v1point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v2point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v3point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v4point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v5point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v6point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v7point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v8point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v9point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_read_v10point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
 size_t
 lasf_read_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v0point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+  
+int
+lasf_write_v1point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v2point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v3point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v4point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v5point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v6point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v7point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v8point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v9point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
+
+int
+lasf_write_v10point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);
 
 int
 lasf_write_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);

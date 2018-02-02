@@ -71,10 +71,10 @@ am__make_running_with_option = \
   test $$has_opt = yes
 am__make_dryrun = (target_option=n; $(am__make_running_with_option))
 am__make_keepgoing = (target_option=k; $(am__make_running_with_option))
-pkgdatadir = $(datadir)/glt
-pkgincludedir = $(includedir)/glt
-pkglibdir = $(libdir)/glt
-pkglibexecdir = $(libexecdir)/glt
+pkgdatadir = $(datadir)/lasf
+pkgincludedir = $(includedir)/lasf
+pkglibdir = $(libdir)/lasf
+pkglibexecdir = $(libexecdir)/lasf
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -222,7 +222,7 @@ CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
-DEFS = -DPACKAGE_NAME=\"GLT\" -DPACKAGE_TARNAME=\"glt\" -DPACKAGE_VERSION=\"1.4.0\" -DPACKAGE_STRING=\"GLT\ 1.4.0\" -DPACKAGE_BUGREPORT=\"matthew.love@colorado.edu\" -DPACKAGE_URL=\"\" -DPACKAGE=\"glt\" -DVERSION=\"1.4.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_LIBM=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_FLOAT_H=1
+DEFS = -DPACKAGE_NAME=\"lasf\" -DPACKAGE_TARNAME=\"lasf\" -DPACKAGE_VERSION=\"1.4.0\" -DPACKAGE_STRING=\"lasf\ 1.4.0\" -DPACKAGE_BUGREPORT=\"matthew.love@colorado.edu\" -DPACKAGE_URL=\"\" -DPACKAGE=\"lasf\" -DVERSION=\"1.4.0\" -DSTDC_HEADERS=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_MEMORY_H=1 -DHAVE_STRINGS_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_UNISTD_H=1 -DHAVE_DLFCN_H=1 -DLT_OBJDIR=\".libs/\" -DHAVE_LIBM=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_FLOAT_H=1
 DEPDIR = .deps
 DLLTOOL = false
 DSYMUTIL = 
@@ -258,11 +258,11 @@ OBJDUMP = objdump
 OBJEXT = o
 OTOOL = 
 OTOOL64 = 
-PACKAGE = glt
+PACKAGE = lasf
 PACKAGE_BUGREPORT = matthew.love@colorado.edu
-PACKAGE_NAME = GLT
-PACKAGE_STRING = GLT 1.4.0
-PACKAGE_TARNAME = glt
+PACKAGE_NAME = lasf
+PACKAGE_STRING = lasf 1.4.0
+PACKAGE_TARNAME = lasf
 PACKAGE_URL = 
 PACKAGE_VERSION = 1.4.0
 PATH_SEPARATOR = :

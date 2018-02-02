@@ -20,30 +20,12 @@ lasf_get_points(int* lasfid, int* lasfhid, int* lasfpid) {
   return 1;
 }
 
-/*
-  Read an lasf_pnts struct from file, based on the las file 
-  id and the las file header id. If seekn is -1 or less, 
-  will read from current position of the input file associated 
-  with the lasfid.  If seekn is 0 or above, will read from that 
-  point numbers position, zero is the first point.
- */
-size_t
-lasf_read_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+int lasf_read_v0point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
   FILE *fp;
   lasf_header lasf_hbuffer;
-  int status;
-
+  
   lasf_pnts0 lasf_ptbuff0;
-  lasf_pnts1 lasf_ptbuff1;
-  lasf_pnts2 lasf_ptbuff2;
-  lasf_pnts3 lasf_ptbuff3;
-  lasf_pnts4 lasf_ptbuff4;
-  lasf_pnts lasf_ptbuff5;
-  lasf_pnts6 lasf_ptbuff6;
-  lasf_pnts7 lasf_ptbuff7;
-  lasf_pnts8 lasf_ptbuff8;
-  lasf_pnts9 lasf_ptbuff9;
-  lasf_pnts10 lasf_ptbuff10;
 
   if (lasfid_array_cnt == 0) {
     lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
@@ -63,173 +45,1236 @@ lasf_read_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(fp, seekn, SEEK_SET);
   }
   
-  if (lasf_hbuffer.pointformat == 0) {
-    status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
-    lasf_ptbuff->x = lasf_ptbuff0.x;
-    lasf_ptbuff->y = lasf_ptbuff0.y;
-    lasf_ptbuff->z = lasf_ptbuff0.z;
-    lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
-    lasf_ptbuff->returns = lasf_ptbuff0.returns;
-    lasf_ptbuff->classification = lasf_ptbuff0.classification;
-    lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
-    lasf_ptbuff->udata = lasf_ptbuff0.udata;
-    lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
-    lasf_ptbuff->gpstime = -1;
-    lasf_ptbuff->red = 0;
-    lasf_ptbuff->green = 0;
-    lasf_ptbuff->blue = 0;
-    lasf_ptbuff->wavedesc = 0;
-    lasf_ptbuff->waveoffset = 0;
-    lasf_ptbuff->wavereturn = 0;
-    lasf_ptbuff->x_t = 0;
-    lasf_ptbuff->y_t = 0;
-    lasf_ptbuff->z_t = 0;
-  }
-  else if (lasf_hbuffer.pointformat == 1) {
-    status = fread(&lasf_ptbuff1, lasf_hbuffer.pointreclen, 1, fp);
-    lasf_ptbuff->x = lasf_ptbuff1.x;
-    lasf_ptbuff->y = lasf_ptbuff1.y;
-    lasf_ptbuff->z = lasf_ptbuff1.z;
-    lasf_ptbuff->intensity = lasf_ptbuff1.intensity;
-    lasf_ptbuff->returns = lasf_ptbuff1.returns;
-    lasf_ptbuff->classification = lasf_ptbuff1.classification;
-    lasf_ptbuff->scanrank = lasf_ptbuff1.scanrank;
-    lasf_ptbuff->udata = lasf_ptbuff1.udata;
-    lasf_ptbuff->psrcid = lasf_ptbuff1.psrcid;
-    lasf_ptbuff->gpstime = lasf_ptbuff1.gpstime;
-    lasf_ptbuff->red = 0;
-    lasf_ptbuff->green = 0;
-    lasf_ptbuff->blue = 0;
-    lasf_ptbuff->wavedesc = 0;
-    lasf_ptbuff->waveoffset = 0;
-    lasf_ptbuff->wavereturn = 0;
-    lasf_ptbuff->x_t = 0;
-    lasf_ptbuff->y_t = 0;
-    lasf_ptbuff->z_t = 0;
-  }
-  else if (lasf_hbuffer.pointformat == 2) {
-    status = fread(&lasf_ptbuff2, lasf_hbuffer.pointreclen, 1, fp);
-    lasf_ptbuff->x = lasf_ptbuff2.x;
-    lasf_ptbuff->y = lasf_ptbuff2.y;
-    lasf_ptbuff->z = lasf_ptbuff2.z;
-    lasf_ptbuff->intensity = lasf_ptbuff2.intensity;
-    lasf_ptbuff->returns = lasf_ptbuff2.returns;
-    lasf_ptbuff->classification = lasf_ptbuff2.classification;
-    lasf_ptbuff->scanrank = lasf_ptbuff2.scanrank;
-    lasf_ptbuff->udata = lasf_ptbuff2.udata;
-    lasf_ptbuff->psrcid = lasf_ptbuff2.psrcid;
-    lasf_ptbuff->gpstime = -1;
-    lasf_ptbuff->red = lasf_ptbuff2.red;
-    lasf_ptbuff->green = lasf_ptbuff2.green;
-    lasf_ptbuff->blue = lasf_ptbuff2.blue;
-    lasf_ptbuff->wavedesc = 0;
-    lasf_ptbuff->waveoffset = 0;
-    lasf_ptbuff->wavereturn = 0;
-    lasf_ptbuff->x_t = 0;
-    lasf_ptbuff->y_t = 0;
-    lasf_ptbuff->z_t = 0;
-  }
-  else if (lasf_hbuffer.pointformat == 3) {
-    status = fread(&lasf_ptbuff3, lasf_hbuffer.pointreclen, 1, fp);
-    lasf_ptbuff->x = lasf_ptbuff3.x;
-    lasf_ptbuff->y = lasf_ptbuff3.y;
-    lasf_ptbuff->z = lasf_ptbuff3.z;
-    lasf_ptbuff->intensity = lasf_ptbuff3.intensity;
-    lasf_ptbuff->returns = lasf_ptbuff3.returns;
-    lasf_ptbuff->classification = lasf_ptbuff3.classification;
-    lasf_ptbuff->scanrank = lasf_ptbuff3.scanrank;
-    lasf_ptbuff->udata = lasf_ptbuff3.udata;
-    lasf_ptbuff->psrcid = lasf_ptbuff3.psrcid;
-    lasf_ptbuff->gpstime = lasf_ptbuff3.gpstime;
-    lasf_ptbuff->red = lasf_ptbuff3.red;
-    lasf_ptbuff->green = lasf_ptbuff3.green;
-    lasf_ptbuff->blue = lasf_ptbuff3.blue;
-    lasf_ptbuff->wavedesc = 0;
-    lasf_ptbuff->waveoffset = 0;
-    lasf_ptbuff->wavereturn = 0;
-    lasf_ptbuff->x_t = 0;
-    lasf_ptbuff->y_t = 0;
-    lasf_ptbuff->z_t = 0;
-  }
-  else if (lasf_hbuffer.pointformat == 4) {
-    status = fread(&lasf_ptbuff4, lasf_hbuffer.pointreclen, 1, fp);
-    lasf_ptbuff->x = lasf_ptbuff4.x;
-    lasf_ptbuff->y = lasf_ptbuff4.y;
-    lasf_ptbuff->z = lasf_ptbuff4.z;
-    lasf_ptbuff->intensity = lasf_ptbuff4.intensity;
-    lasf_ptbuff->returns = lasf_ptbuff4.returns;
-    lasf_ptbuff->classification = lasf_ptbuff4.classification;
-    lasf_ptbuff->scanrank = lasf_ptbuff4.scanrank;
-    lasf_ptbuff->udata = lasf_ptbuff4.udata;
-    lasf_ptbuff->psrcid = lasf_ptbuff4.psrcid;
-    lasf_ptbuff->gpstime = lasf_ptbuff4.gpstime;
-    lasf_ptbuff->wavedesc = lasf_ptbuff4.wavedesc;
-    lasf_ptbuff->waveoffset = lasf_ptbuff4.waveoffset;
-    lasf_ptbuff->wavereturn = lasf_ptbuff4.wavereturn;
-    lasf_ptbuff->x_t = lasf_ptbuff4.x_t;
-    lasf_ptbuff->y_t = lasf_ptbuff4.y_t;
-    lasf_ptbuff->z_t = lasf_ptbuff4.z_t;
-  }
-  else if (lasf_hbuffer.pointformat == 5) {
-    status = fread(&lasf_ptbuff5, lasf_hbuffer.pointreclen, 1, fp);
-    lasf_ptbuff->x = lasf_ptbuff5.x;
-    lasf_ptbuff->y = lasf_ptbuff5.y;
-    lasf_ptbuff->z = lasf_ptbuff5.z;
-    lasf_ptbuff->intensity = lasf_ptbuff5.intensity;
-    lasf_ptbuff->returns = lasf_ptbuff5.returns;
-    lasf_ptbuff->classification = lasf_ptbuff5.classification;
-    lasf_ptbuff->scanrank = lasf_ptbuff5.scanrank;
-    lasf_ptbuff->udata = lasf_ptbuff5.udata;
-    lasf_ptbuff->psrcid = lasf_ptbuff5.psrcid;
-    lasf_ptbuff->gpstime = lasf_ptbuff5.gpstime;
-    lasf_ptbuff->red = lasf_ptbuff3.red;
-    lasf_ptbuff->green = lasf_ptbuff3.green;
-    lasf_ptbuff->blue = lasf_ptbuff3.blue;
-    lasf_ptbuff->wavedesc = lasf_ptbuff5.wavedesc;
-    lasf_ptbuff->waveoffset = lasf_ptbuff5.waveoffset;
-    lasf_ptbuff->wavereturn = lasf_ptbuff5.wavereturn;
-    lasf_ptbuff->x_t = lasf_ptbuff5.x_t;
-    lasf_ptbuff->y_t = lasf_ptbuff5.y_t;
-    lasf_ptbuff->z_t = lasf_ptbuff5.z_t;
-  }
-  else if (lasf_hbuffer.pointformat == 6) {
-    status = fread(&lasf_ptbuff6, lasf_hbuffer.pointreclen, 1, fp);
-    lasf_ptbuff->x = lasf_ptbuff6.x;
-    lasf_ptbuff->y = lasf_ptbuff6.y;
-    lasf_ptbuff->z = lasf_ptbuff6.z;
-    lasf_ptbuff->intensity = lasf_ptbuff6.intensity;
-    lasf_ptbuff->returns = lasf_ptbuff6.returns;
-    lasf_ptbuff->classification = lasf_ptbuff6.classification;
-    lasf_ptbuff->udata = lasf_ptbuff6.udata;
-    lasf_ptbuff->scanrank = lasf_ptbuff6.scanrank;
-    lasf_ptbuff->psrcid = lasf_ptbuff6.psrcid;
-    lasf_ptbuff->gpstime = lasf_ptbuff6.gpstime;
-  }
-  /* else if (lasf_hbuffer.pointformat == 168) { */
-  /*   //status = fread(&lasf_ptbuff4, lasf_hbuffer.pointreclen, 1, fp); */
-  /*   status = lasf_read_xyz_line(&lasf_ptbuff4, fp, " ", "xyz"); */
-  /*   lasf_ptbuff->x = lasf_ptbuff4.x; */
-  /*   lasf_ptbuff->y = lasf_ptbuff4.y; */
-  /*   lasf_ptbuff->z = lasf_ptbuff4.z; */
-  /*   lasf_ptbuff->intensity = lasf_ptbuff4.intensity; */
-  /*   lasf_ptbuff->returns = lasf_ptbuff4.returns; */
-  /*   lasf_ptbuff->classification = lasf_ptbuff4.classification; */
-  /*   lasf_ptbuff->scanrank = lasf_ptbuff4.scanrank; */
-  /*   lasf_ptbuff->udata = lasf_ptbuff4.udata; */
-  /*   lasf_ptbuff->psrcid = lasf_ptbuff4.psrcid; */
-  /*   lasf_ptbuff->gpstime = lasf_ptbuff4.gpstime; */
-  /*   lasf_ptbuff->wavedesc = lasf_ptbuff4.wavedesc; */
-  /*   lasf_ptbuff->waveoffset = lasf_ptbuff4.waveoffset; */
-  /*   lasf_ptbuff->wavereturn = lasf_ptbuff4.wavereturn; */
-  /*   lasf_ptbuff->x_t = lasf_ptbuff4.x_t; */
-  /*   lasf_ptbuff->y_t = lasf_ptbuff4.y_t; */
-  /*   lasf_ptbuff->z_t = lasf_ptbuff4.z_t; */
-  /* } */
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = -1;
+  lasf_ptbuff->red = 0;
+  lasf_ptbuff->green = 0;
+  lasf_ptbuff->blue = 0;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = 0;
+  lasf_ptbuff->waveoffset = 0;
+  lasf_ptbuff->wavepacksize = 0;
+  lasf_ptbuff->wavereturn = 0;
+  lasf_ptbuff->x_t = 0;
+  lasf_ptbuff->y_t = 0;
+  lasf_ptbuff->z_t = 0;
+  
   if (status == 1) {
     return lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v1point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts1 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = 0;
+  lasf_ptbuff->green = 0;
+  lasf_ptbuff->blue = 0;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = 0;
+  lasf_ptbuff->waveoffset = 0;
+  lasf_ptbuff->wavepacksize = 0;
+  lasf_ptbuff->wavereturn = 0;
+  lasf_ptbuff->x_t = 0;
+  lasf_ptbuff->y_t = 0;
+  lasf_ptbuff->z_t = 0;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v2point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts2 lasf_ptbuff0;
+
+    if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = -1;
+  lasf_ptbuff->red = lasf_ptbuff0.red;
+  lasf_ptbuff->green = lasf_ptbuff0.green;
+  lasf_ptbuff->blue = lasf_ptbuff0.blue;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = 0;
+  lasf_ptbuff->waveoffset = 0;
+  lasf_ptbuff->wavepacksize = 0;
+  lasf_ptbuff->wavereturn = 0;
+  lasf_ptbuff->x_t = 0;
+  lasf_ptbuff->y_t = 0;
+  lasf_ptbuff->z_t = 0;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v3point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts3 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = lasf_ptbuff0.red;
+  lasf_ptbuff->green = lasf_ptbuff0.green;
+  lasf_ptbuff->blue = lasf_ptbuff0.blue;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = 0;
+  lasf_ptbuff->waveoffset = 0;
+  lasf_ptbuff->wavepacksize = 0;
+  lasf_ptbuff->wavereturn = 0;
+  lasf_ptbuff->x_t = 0;
+  lasf_ptbuff->y_t = 0;
+  lasf_ptbuff->z_t = 0;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v4point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts4 lasf_ptbuff0;
+
+    if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = 0;
+  lasf_ptbuff->green = 0;
+  lasf_ptbuff->blue = 0;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = lasf_ptbuff0.wavedesc;
+  lasf_ptbuff->waveoffset = lasf_ptbuff0.waveoffset;
+  lasf_ptbuff->wavepacksize = lasf_ptbuff0.wavepacksize;
+  lasf_ptbuff->wavereturn = lasf_ptbuff0.wavereturn;
+  lasf_ptbuff->x_t = lasf_ptbuff0.x_t;
+  lasf_ptbuff->y_t = lasf_ptbuff0.y_t;
+  lasf_ptbuff->z_t = lasf_ptbuff0.z_t;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v5point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts5 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = lasf_ptbuff0.red;
+  lasf_ptbuff->green = lasf_ptbuff0.green;
+  lasf_ptbuff->blue = lasf_ptbuff0.blue;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = lasf_ptbuff0.wavedesc;
+  lasf_ptbuff->waveoffset = lasf_ptbuff0.waveoffset;
+  lasf_ptbuff->wavepacksize = lasf_ptbuff0.wavepacksize;
+  lasf_ptbuff->wavereturn = lasf_ptbuff0.wavereturn;
+  lasf_ptbuff->x_t = lasf_ptbuff0.x_t;
+  lasf_ptbuff->y_t = lasf_ptbuff0.y_t;
+  lasf_ptbuff->z_t = lasf_ptbuff0.z_t;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v6point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts6 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = 0;
+  lasf_ptbuff->green = 0;
+  lasf_ptbuff->blue = 0;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = 0;
+  lasf_ptbuff->waveoffset = 0;
+  lasf_ptbuff->wavepacksize = 0;
+  lasf_ptbuff->wavereturn = 0;
+  lasf_ptbuff->x_t = 0;
+  lasf_ptbuff->y_t = 0;
+  lasf_ptbuff->z_t = 0;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v7point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts7 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = lasf_ptbuff0.red;
+  lasf_ptbuff->green = lasf_ptbuff0.green;
+  lasf_ptbuff->blue = lasf_ptbuff0.blue;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = 0;
+  lasf_ptbuff->waveoffset = 0;
+  lasf_ptbuff->wavepacksize = 0;
+  lasf_ptbuff->wavereturn = 0;
+  lasf_ptbuff->x_t = 0;
+  lasf_ptbuff->y_t = 0;
+  lasf_ptbuff->z_t = 0;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v8point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts8 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = lasf_ptbuff0.red;
+  lasf_ptbuff->green = lasf_ptbuff0.green;
+  lasf_ptbuff->blue = lasf_ptbuff0.blue;
+  lasf_ptbuff->NIR = lasf_ptbuff0.NIR;
+  lasf_ptbuff->wavedesc = 0;
+  lasf_ptbuff->waveoffset = 0;
+  lasf_ptbuff->wavepacksize = 0;
+  lasf_ptbuff->wavereturn = 0;
+  lasf_ptbuff->x_t = 0;
+  lasf_ptbuff->y_t = 0;
+  lasf_ptbuff->z_t = 0;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v9point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts9 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = 0;
+  lasf_ptbuff->green = 0;
+  lasf_ptbuff->blue = 0;
+  lasf_ptbuff->NIR = 0;
+  lasf_ptbuff->wavedesc = lasf_ptbuff0.wavedesc;
+  lasf_ptbuff->waveoffset = lasf_ptbuff0.waveoffset;
+  lasf_ptbuff->wavepacksize = lasf_ptbuff0.wavepacksize;
+  lasf_ptbuff->wavereturn = lasf_ptbuff0.wavereturn;
+  lasf_ptbuff->x_t = lasf_ptbuff0.x_t;
+  lasf_ptbuff->y_t = lasf_ptbuff0.y_t;
+  lasf_ptbuff->z_t = lasf_ptbuff0.z_t;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int lasf_read_v10point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  int status;
+  FILE *fp;
+  lasf_header lasf_hbuffer;
+  
+  lasf_pnts lasf_ptbuff0;
+  
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+  fp = lasfid_array[ lasfid ].las_file;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasf_hbuffer.pointreclen) + lasf_hbuffer.offset;
+    fseek(fp, seekn, SEEK_SET);
+  }
+  
+  status = fread(&lasf_ptbuff0, lasf_hbuffer.pointreclen, 1, fp);
+
+  lasf_ptbuff->x = lasf_ptbuff0.x;
+  lasf_ptbuff->y = lasf_ptbuff0.y;
+  lasf_ptbuff->z = lasf_ptbuff0.z;
+  lasf_ptbuff->intensity = lasf_ptbuff0.intensity;
+  lasf_ptbuff->returns = lasf_ptbuff0.returns;
+  lasf_ptbuff->classification = lasf_ptbuff0.classification;
+  lasf_ptbuff->scanrank = lasf_ptbuff0.scanrank;
+  lasf_ptbuff->udata = lasf_ptbuff0.udata;
+  lasf_ptbuff->psrcid = lasf_ptbuff0.psrcid;
+  lasf_ptbuff->gpstime = lasf_ptbuff0.gpstime;
+  lasf_ptbuff->red = lasf_ptbuff0.red;
+  lasf_ptbuff->green = lasf_ptbuff0.green;
+  lasf_ptbuff->blue = lasf_ptbuff0.blue;
+  lasf_ptbuff->NIR = lasf_ptbuff0.NIR;
+  lasf_ptbuff->wavedesc = lasf_ptbuff0.wavedesc;
+  lasf_ptbuff->waveoffset = lasf_ptbuff0.waveoffset;
+  lasf_ptbuff->wavepacksize = lasf_ptbuff0.wavepacksize;
+  lasf_ptbuff->wavereturn = lasf_ptbuff0.wavereturn;
+  lasf_ptbuff->x_t = lasf_ptbuff0.x_t;
+  lasf_ptbuff->y_t = lasf_ptbuff0.y_t;
+  lasf_ptbuff->z_t = lasf_ptbuff0.z_t;
+  
+  if (status == 1) {
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+/*
+  Read an lasf_pnts struct from file, based on the las file 
+  id and the las file header id. If seekn is -1 or less, 
+  will read from current position of the input file associated 
+  with the lasfid.  If seekn is 0 or above, will read from that 
+  point numbers position, zero is the first point.
+ */
+size_t
+lasf_read_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  lasf_header lasf_hbuffer;
+  int status;
+
+  lasf_pnts lasf_ptbuff1;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+
+  switch(lasf_hbuffer.pointformat) {
+  case 0:
+    status = lasf_read_v0point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 1:
+    status = lasf_read_v1point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 2:
+    status = lasf_read_v2point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 3:
+    status = lasf_read_v3point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 4:
+    status = lasf_read_v4point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 5:
+    status = lasf_read_v5point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 6:
+    status = lasf_read_v6point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    if (status != lasf_NOERR) {
+      lasf_print_error(status, "laspnt.c");
+    }
+    break;
+  case 7:
+    status = lasf_read_v7point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 8:
+    status = lasf_read_v8point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 9:
+    status = lasf_read_v9point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  case 10:
+    status = lasf_read_v10point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
+    break;
+  }
+  if (status == lasf_NOERR) {
+    *lasf_ptbuff = lasf_ptbuff1;
+    return lasf_NOERR;
+  }
+  else {
+    lasf_file_status(&status, "Failed to read point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v0point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts0 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v1point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts1 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v2point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts2 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.red = lasf_ptbuff->red;
+  lasf_ptbuff0.green = lasf_ptbuff->green;
+  lasf_ptbuff0.blue = lasf_ptbuff->blue;
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v3point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts3 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  lasf_ptbuff0.red = lasf_ptbuff->red;
+  lasf_ptbuff0.green = lasf_ptbuff->green;
+  lasf_ptbuff0.blue = lasf_ptbuff->blue;
+  
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v4point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts4 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  lasf_ptbuff0.wavedesc = lasf_ptbuff->wavedesc;
+  lasf_ptbuff0.waveoffset = lasf_ptbuff->waveoffset;
+  lasf_ptbuff0.wavepacksize = lasf_ptbuff->wavepacksize;
+  lasf_ptbuff0.wavereturn = lasf_ptbuff->wavereturn;
+  lasf_ptbuff0.x_t = lasf_ptbuff->x_t;
+  lasf_ptbuff0.y_t = lasf_ptbuff->y_t;
+  lasf_ptbuff0.z_t = lasf_ptbuff->z_t;
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v5point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts5 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  lasf_ptbuff0.red = lasf_ptbuff->red;
+  lasf_ptbuff0.green = lasf_ptbuff->green;
+  lasf_ptbuff0.blue = lasf_ptbuff->blue;
+  lasf_ptbuff0.wavedesc = lasf_ptbuff->wavedesc;
+  lasf_ptbuff0.waveoffset = lasf_ptbuff->waveoffset;
+  lasf_ptbuff0.wavepacksize = lasf_ptbuff->wavepacksize;
+  lasf_ptbuff0.wavereturn = lasf_ptbuff->wavereturn;
+  lasf_ptbuff0.x_t = lasf_ptbuff->x_t;
+  lasf_ptbuff0.y_t = lasf_ptbuff->y_t;
+  lasf_ptbuff0.z_t = lasf_ptbuff->z_t;
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v6point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts6 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v7point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts7 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  lasf_ptbuff0.red = lasf_ptbuff->red;
+  lasf_ptbuff0.green = lasf_ptbuff->green;
+  lasf_ptbuff0.blue = lasf_ptbuff->blue;
+  
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v8point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts8 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  lasf_ptbuff0.red = lasf_ptbuff->red;
+  lasf_ptbuff0.green = lasf_ptbuff->green;
+  lasf_ptbuff0.blue = lasf_ptbuff->blue;
+  lasf_ptbuff0.NIR = lasf_ptbuff->NIR;
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v9point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  lasf_pnts9 lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  lasf_ptbuff0.x = lasf_ptbuff->x;
+  lasf_ptbuff0.y = lasf_ptbuff->y;
+  lasf_ptbuff0.z = lasf_ptbuff->z;
+  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
+  lasf_ptbuff0.returns = lasf_ptbuff->returns;
+  lasf_ptbuff0.classification = lasf_ptbuff->classification;
+  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
+  lasf_ptbuff0.udata = lasf_ptbuff->udata;
+  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
+  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  lasf_ptbuff0.wavedesc = lasf_ptbuff->wavedesc;
+  lasf_ptbuff0.waveoffset = lasf_ptbuff->waveoffset;
+  lasf_ptbuff0.wavepacksize = lasf_ptbuff->wavepacksize;
+  lasf_ptbuff0.wavereturn = lasf_ptbuff->wavereturn;
+  lasf_ptbuff0.x_t = lasf_ptbuff->x_t;
+  lasf_ptbuff0.y_t = lasf_ptbuff->y_t;
+  lasf_ptbuff0.z_t = lasf_ptbuff->z_t;
+
+  
+  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
+    return status;
+  }
+}
+
+int
+lasf_write_v10point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
+  FILE *lasout;
+  lasf_header lasfh;
+  int status;
+
+  //lasf_pnts lasf_ptbuff0;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+  
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasout = lasfid_array[ lasfid ].las_file;
+  lasfh = lasfheaderid_array[ lasfhid ].lasfh;
+
+  if (seekn >= 0) {
+    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
+    fseek(lasout, seekn, SEEK_SET);
+  }
+
+  status = fwrite(&lasf_ptbuff,  sizeof(lasf_ptbuff), 1, lasout);
+
+  if (status == 1) {
+    return status;
+  }
+  else {
+    lasf_file_status(&status, "Failed to write point", "");
     return status;
   }
 }
@@ -246,13 +1291,6 @@ lasf_write_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
   FILE *lasout;
   lasf_header lasfh;
   int status;
-  lasf_pnts0 lasf_ptbuff0;
-  lasf_pnts1 lasf_ptbuff1;
-  lasf_pnts2 lasf_ptbuff2;
-  lasf_pnts3 lasf_ptbuff3;
-  lasf_pnts4 lasf_ptbuff4;
-  lasf_pnts lasf_ptbuff5;
-  lasf_pnts6 lasf_ptbuff6;
 
   if (lasfid_array_cnt == 0) {
     lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
@@ -266,122 +1304,44 @@ lasf_write_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
   lasout = lasfid_array[ lasfid ].las_file;
   lasfh = lasfheaderid_array[ lasfhid ].lasfh;
 
-  if (seekn >= 0) {
-    seekn = (seekn * lasfh.pointreclen) + lasfh.offset;
-    fseek(lasout, seekn, SEEK_SET);
-  }
-
-  if (lasfh.pointformat == 0) {
-    lasf_ptbuff0.x = lasf_ptbuff->x;
-    lasf_ptbuff0.y = lasf_ptbuff->y;
-    lasf_ptbuff0.z = lasf_ptbuff->z;
-    lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-    lasf_ptbuff0.returns = lasf_ptbuff->returns;
-    lasf_ptbuff0.classification = lasf_ptbuff->classification;
-    lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-    lasf_ptbuff0.udata = lasf_ptbuff->udata;
-    lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-    status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
-  }
-  else if (lasfh.pointformat == 1) {
-    lasf_ptbuff1.x = lasf_ptbuff->x;
-    lasf_ptbuff1.y = lasf_ptbuff->y;
-    lasf_ptbuff1.z = lasf_ptbuff->z;
-    lasf_ptbuff1.intensity = lasf_ptbuff->intensity;
-    lasf_ptbuff1.returns = lasf_ptbuff->returns;
-    lasf_ptbuff1.classification = lasf_ptbuff->classification;
-    lasf_ptbuff1.scanrank = lasf_ptbuff->scanrank;
-    lasf_ptbuff1.udata = lasf_ptbuff->udata;
-    lasf_ptbuff1.psrcid = lasf_ptbuff->psrcid;
-    lasf_ptbuff1.gpstime = lasf_ptbuff->gpstime;
-    status = fwrite(&lasf_ptbuff1,  sizeof(lasf_ptbuff1), 1, lasout);
-  }
-  else if (lasfh.pointformat == 2) {
-    lasf_ptbuff2.x = lasf_ptbuff->x;
-    lasf_ptbuff2.y = lasf_ptbuff->y;
-    lasf_ptbuff2.z = lasf_ptbuff->z;
-    lasf_ptbuff2.intensity = lasf_ptbuff->intensity;
-    lasf_ptbuff2.returns = lasf_ptbuff->returns;
-    lasf_ptbuff2.classification = lasf_ptbuff->classification;
-    lasf_ptbuff2.scanrank = lasf_ptbuff->scanrank;
-    lasf_ptbuff2.udata = lasf_ptbuff->udata;
-    lasf_ptbuff2.psrcid = lasf_ptbuff->psrcid;
-    lasf_ptbuff2.red = lasf_ptbuff->red;
-    lasf_ptbuff2.green = lasf_ptbuff->green;
-    lasf_ptbuff2.blue = lasf_ptbuff->blue;
-    status = fwrite(&lasf_ptbuff2,  sizeof(lasf_ptbuff2), 1, lasout);
-  }
-  else if (lasfh.pointformat == 3) {
-    lasf_ptbuff3.x = lasf_ptbuff->x;
-    lasf_ptbuff3.y = lasf_ptbuff->y;
-    lasf_ptbuff3.z = lasf_ptbuff->z;
-    lasf_ptbuff3.intensity = lasf_ptbuff->intensity;
-    lasf_ptbuff3.returns = lasf_ptbuff->returns;
-    lasf_ptbuff3.classification = lasf_ptbuff->classification;
-    lasf_ptbuff3.scanrank = lasf_ptbuff->scanrank;
-    lasf_ptbuff3.udata = lasf_ptbuff->udata;
-    lasf_ptbuff3.psrcid = lasf_ptbuff->psrcid;
-    lasf_ptbuff3.gpstime = lasf_ptbuff->gpstime;
-    lasf_ptbuff3.red = lasf_ptbuff->red;
-    lasf_ptbuff3.green = lasf_ptbuff->green;
-    lasf_ptbuff3.blue = lasf_ptbuff->blue;
-    status = fwrite(&lasf_ptbuff3,  sizeof(lasf_ptbuff3), 1, lasout);
-  }
-  else if (lasfh.pointformat == 4) {
-    lasf_ptbuff4.x = lasf_ptbuff->x;
-    lasf_ptbuff4.y = lasf_ptbuff->y;
-    lasf_ptbuff4.z = lasf_ptbuff->z;
-    lasf_ptbuff4.intensity = lasf_ptbuff->intensity;
-    lasf_ptbuff4.returns = lasf_ptbuff->returns;
-    lasf_ptbuff4.classification = lasf_ptbuff->classification;
-    lasf_ptbuff4.scanrank = lasf_ptbuff->scanrank;
-    lasf_ptbuff4.udata = lasf_ptbuff->udata;
-    lasf_ptbuff4.psrcid = lasf_ptbuff->psrcid;
-    lasf_ptbuff4.gpstime = lasf_ptbuff->gpstime;
-    lasf_ptbuff4.wavedesc = lasf_ptbuff->wavedesc;
-    lasf_ptbuff4.waveoffset = lasf_ptbuff->waveoffset;
-    lasf_ptbuff4.wavereturn = lasf_ptbuff->wavereturn;
-    lasf_ptbuff4.x_t = lasf_ptbuff->x_t;
-    lasf_ptbuff4.y_t = lasf_ptbuff->y_t;
-    lasf_ptbuff4.z_t = lasf_ptbuff->z_t;
-    status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff4), 1, lasout);
-  }
-  else if (lasfh.pointformat == 5) {
-    lasf_ptbuff5.x = lasf_ptbuff->x;
-    lasf_ptbuff5.y = lasf_ptbuff->y;
-    lasf_ptbuff5.z = lasf_ptbuff->z;
-    lasf_ptbuff5.intensity = lasf_ptbuff->intensity;
-    lasf_ptbuff5.returns = lasf_ptbuff->returns;
-    lasf_ptbuff5.classification = lasf_ptbuff->classification;
-    lasf_ptbuff5.scanrank = lasf_ptbuff->scanrank;
-    lasf_ptbuff5.udata = lasf_ptbuff->udata;
-    lasf_ptbuff5.psrcid = lasf_ptbuff->psrcid;
-    lasf_ptbuff5.gpstime = lasf_ptbuff->gpstime;
-    lasf_ptbuff5.red = lasf_ptbuff->red;
-    lasf_ptbuff5.green = lasf_ptbuff->green;
-    lasf_ptbuff5.blue = lasf_ptbuff->blue;
-    lasf_ptbuff5.wavedesc = lasf_ptbuff->wavedesc;
-    lasf_ptbuff5.waveoffset = lasf_ptbuff->waveoffset;
-    lasf_ptbuff5.wavereturn = lasf_ptbuff->wavereturn;
-    lasf_ptbuff5.x_t = lasf_ptbuff->x_t;
-    lasf_ptbuff5.y_t = lasf_ptbuff->y_t;
-    lasf_ptbuff5.z_t = lasf_ptbuff->z_t;
-    status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff5), 1, lasout);
-  }
-  else if (lasfh.pointformat == 6) {
-    lasf_ptbuff6.x = lasf_ptbuff->x;
-    lasf_ptbuff6.y = lasf_ptbuff->y;
-    lasf_ptbuff6.z = lasf_ptbuff->z;
-    lasf_ptbuff6.intensity = lasf_ptbuff->intensity;
-    lasf_ptbuff6.returns = lasf_ptbuff->returns;
-    lasf_ptbuff6.classification = lasf_ptbuff->classification;
-    lasf_ptbuff6.udata = lasf_ptbuff->udata;
-    lasf_ptbuff6.scanrank = lasf_ptbuff->scanrank;
-    lasf_ptbuff6.psrcid = lasf_ptbuff->psrcid;
-    lasf_ptbuff6.gpstime = lasf_ptbuff->gpstime;
-    status = fwrite(&lasf_ptbuff0, sizeof(lasf_ptbuff6), 1, lasout);
-  }
+  lasf_pnts lasf_ptbuff0;
+  lasf_ptbuff0 = *lasf_ptbuff;
   
+  switch(lasfh.pointformat) {
+  case 0:
+    status = lasf_write_v0point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 1:
+    status = lasf_write_v1point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 2:
+    status = lasf_write_v2point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 3:
+    status = lasf_write_v3point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 4:
+    status = lasf_write_v4point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 5:
+    status = lasf_write_v5point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 6:
+    status = lasf_write_v6point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 7:
+    status = lasf_write_v7point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 8:
+    status = lasf_write_v8point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 9:
+    status = lasf_write_v9point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  case 10:
+    status = lasf_write_v10point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
+    break;
+  }  
   if (status == 1) {
     return lasf_NOERR;
   }
@@ -469,47 +1429,6 @@ lasf_cmpclass(char* lasl_clr, int classification) {
   }
   return pflag; 
 }
-
-/* int */
-/* lasf_insideply(char* poly, lasf_pnts lasf_ptbuff0) { */
-/*   // open poly */
-/*   GDALAllRegister(); */
-/*   GDALDatasetH hDS; */
-
-/*   hDS = GDALOpenEx( poly, GDAL_OF_VECTOR, NULL, NULL, NULL ); */
-/*   if( hDS == NULL ) { */
-/*     printf( "lasf: OGR Open failed.\n" ); */
-/*     exit( 1 ); */
-/*   } */
-
-/*   OGRLayerH hLayer; */
-  
-/*   hLayer = GDALDatasetGetLayerByName( hDS, "polygon" ); */
-  
-/*   OGRFeatureH hFeature; */
-  
-/*   OGR_L_ResetReading(hLayer); */
-/*   while( (hFeature = OGR_L_GetNextFeature(hLayer)) != NULL ) { */
-/*     OGRFeatureDefnH hFDefn = OGR_L_GetLayerDefn(hLayer); */
-/*     int iField; */
-    
-/*     for( iField = 0; iField < OGR_FD_GetFieldCount(hFDefn); iField++ ) { */
-/*       OGRFieldDefnH hFieldDefn = OGR_FD_GetFieldDefn( hFDefn, iField ); */
-      
-/*       OGRGeometryH hGeometry; */
-      
-/*       hGeometry = OGR_F_GetGeometryRef(hFeature); */
-/*       if( hGeometry != NULL ) { */
-/* 	//exportToWkt() */
-/* 	//printf( "%.3f,%3.f\n", OGR_G_GetX(hGeometry, 0), OGR_G_GetY(hGeometry, 0) ); */
-/*       } */
-/*       else { */
-/* 	printf( "no geometry\n" ); */
-/*       } */
-/*     } */
-/*     OGR_F_Destroy( hFeature ); */
-/*   } */
-/* } */
 
 /* Given an LAS point record's returns value 'lasf_ptrt', 
    add to it's corresponding array loaction.*/

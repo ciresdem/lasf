@@ -165,7 +165,7 @@ void
 lasf_print_version(const char* command_name, const char* command_version) {
   fprintf(stderr, "%s version %s (%s)\n\
 Copyright (C) 2010-2016 Matthew Love <matthew.love@colorado.edu> \n\
-Generic LAS Toolkit (lasf) is liscensed under the GPL v.2 or later and is \n\
+LASFile (lasf) is liscensed under the GPL v.2 or later and is \n\
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;\n\
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A\n\
 PARTICULAR PURPOSE.  See the GNU General Public License for more details.\n\

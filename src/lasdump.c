@@ -16,7 +16,7 @@
 #include<getopt.h>
 #include "lasf.h"
 
-#define LASDUMP_VERSION "0.2.0"
+#define LASDUMP_VERSION "0.2.1"
 
 /* Flags set by `--version' and `--help' */
 static int version_flag;
@@ -338,6 +338,7 @@ main (int argc, char **argv) {
       pf_length = strlen(lasf_recr);
       
       while (lasf_read_point(lasfid, lasfhid, n, &lasf_ptbuff0) == lasf_NOERR) {
+
 	if (cflag == 1) {
 	  strcpy(cbuff, lasf_clr);
 	  if (lasf_cmpclass(cbuff, lasf_ptbuff0.classification) == 1) printflag++;
