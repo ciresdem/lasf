@@ -290,6 +290,7 @@ main (int argc, char **argv) {
 	       lasf_hbuffer0.numptbyreturn14[14]);
       }
       
+      /* Dump the Variable Length Headers */
       if (vflag == 0) {
 	int vlhid;
 	lasf_vlheader lasf_vlhbuff;
@@ -319,6 +320,7 @@ main (int argc, char **argv) {
     
     /* Loop through the point records and dump them out*/
     if ((hflag == 0 && pflag > 0) || (hflag == 0 && pflag == 0) || (hflag > 0 && pflag > 0)) {	      
+      /* Get the decimal value to print */
       n = 10;
       while (lasf_hbuffer0.xscale * n != floor(lasf_hbuffer0.xscale * n) && xdecnum != 7) {
       	n = n * 10;
@@ -334,6 +336,8 @@ main (int argc, char **argv) {
       	n = n * 10;
       	zdecnum++;
       }
+
+      /* Read the points from file and print them if desired*/
       n = 0, i = 0;
       pf_length = strlen(lasf_recr);
       

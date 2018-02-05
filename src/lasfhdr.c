@@ -1081,6 +1081,22 @@ lasf_get_vlheader(int* lasfvlhid, lasf_vlheader* lasfvlh)
   return lasf_NOERR;
 }
 
+/* int */
+/* lasf_print_vldata(int* lasfvlhid) */
+/* { */
+/*   int status; */
+/*   lasf_vlheader lasfvlh; */
+
+/*   if (lasfvlheaderid_array_cnt == 0) { */
+/*     lasf_file_status(&status, "There is currently no valid LAS file header loaded.", ""); */
+/*     return status; */
+/*   } */
+/*   lasfvlh = lasfvlheaderid_array[*lasfvlhid].lasfvlh; */
+/*   lasfvlh.recordlen; */
+/*   lasfh = lasfheaderid_array[lasfvlheaderid_array[*lasfvlhid].lasf_hid].lasf_header; */
+/*   lasffp = lasfid_array[lasfvlheaderid_array[*lasfvlhid].lasf_id].las_file; */
+/* } */
+
 int
 lasf_read_byte_write_byte(int* lasfid, int* lasfid_out, int bn) {
   FILE *fp;
