@@ -421,7 +421,7 @@ int lasf_read_v6point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff
     return lasf_NOERR;
   }
   else {
-    lasf_file_status(&status, "Failed to read point", "");
+    lasf_file_status(&status, "Failed to read point", lasfid_array[ lasfid ].lasfn);
     return status;
   }
 }
@@ -705,9 +705,6 @@ lasf_read_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     break;
   case 6:
     status = lasf_read_v6point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
-    if (status != lasf_NOERR) {
-      lasf_print_error(status, "laspnt.c");
-    }
     break;
   case 7:
     status = lasf_read_v7point(lasfid, lasfhid, seekn, &lasf_ptbuff1);
