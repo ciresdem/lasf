@@ -314,6 +314,8 @@ main (int argc, char **argv) {
 	  printf("%s Record Length: %d\n", lasf_cc, lasf_vlhbuff.recordlen);
 	  printf("%s Description: %s\n", lasf_cc, lasf_vlhbuff.description);
 
+	  status = lasf_print_vldata(&vlhid);
+
 	}
       }
     }

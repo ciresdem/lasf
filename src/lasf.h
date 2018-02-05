@@ -553,6 +553,7 @@ typedef struct {
   int id; // ID to locate struct.
   int lasf_id; // ID to the associated LAS File.
   int lasf_hid; // ID to the associated LAS File header.
+  int data_offset; // Offset to associated data
   lasf_vlheader lasfvlh;
 }lasf_vlheaderid;
 
@@ -687,6 +688,9 @@ lasf_open_vlheader(int* lasfid, int* lasfhid, int* lasfvlhid, int seekn);
 
 int
 lasf_get_vlheader(int* lasfvlhid, lasf_vlheader* lasfvlh);
+
+int
+lasf_print_vldata(int* lasfvlhid);
 
 int
 lasf_read_v0point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff);

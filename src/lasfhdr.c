@@ -1039,13 +1039,6 @@ lasf_open_vlheader(int* lasfid, int* lasfhid, int* lasfvlhid, int seekn) {
   status = fread(&lasf_vlhbuffer.recordid, sizeof(lasf_vlhbuffer.recordid), 1, fp);
   status = fread(&lasf_vlhbuffer.recordlen, sizeof(lasf_vlhbuffer.recordlen), 1, fp);
   status = fread(&lasf_vlhbuffer.description, sizeof(lasf_vlhbuffer.description), 1, fp);
-
-  // TODO don't print this here, send to variable.
-  char vlrec[vlreclen];
-  status = fread(&vlrec, sizeof(vlrec), 1, fp);
-  printf("----\n");
-  printf("%s\n",vlrec);
-  printf("----\n");
   
   rewind(fp);
 
@@ -1058,6 +1051,7 @@ lasf_open_vlheader(int* lasfid, int* lasfhid, int* lasfvlhid, int seekn) {
   lfvlhid.lasf_id = *lasfid;
   lfvlhid.lasf_hid = *lasfhid;
   lfvlhid.lasfvlh = lasf_vlhbuffer;
+  lfvlhid.data_offset = cseekn+54;
 
   // set the lasfvlheaderid
   *lasfvlhid = lasfvlheaderid_array_cnt;
@@ -1081,21 +1075,41 @@ lasf_get_vlheader(int* lasfvlhid, lasf_vlheader* lasfvlh)
   return lasf_NOERR;
 }
 
-/* int */
-/* lasf_print_vldata(int* lasfvlhid) */
-/* { */
-/*   int status; */
-/*   lasf_vlheader lasfvlh; */
+int
+lasf_print_vldata(int* lasfvlhid)
+{
+  int status, seekn;
+  lasf_header lasfh;
+  lasf_vlheader lasfvlh;
+  unsigned short vlreclen;
+  FILE* lasffp;
 
-/*   if (lasfvlheaderid_array_cnt == 0) { */
-/*     lasf_file_status(&status, "There is currently no valid LAS file header loaded.", ""); */
-/*     return status; */
-/*   } */
-/*   lasfvlh = lasfvlheaderid_array[*lasfvlhid].lasfvlh; */
-/*   lasfvlh.recordlen; */
-/*   lasfh = lasfheaderid_array[lasfvlheaderid_array[*lasfvlhid].lasf_hid].lasf_header; */
-/*   lasffp = lasfid_array[lasfvlheaderid_array[*lasfvlhid].lasf_id].las_file; */
-/* } */
+  if (lasfvlheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header loaded.", "");
+    return status;
+  }
+  lasfvlh = lasfvlheaderid_array[*lasfvlhid].lasfvlh;
+  seekn = lasfvlheaderid_array[*lasfvlhid].data_offset;
+  vlreclen = lasfvlh.recordlen;
+  lasfh = lasfheaderid_array[lasfvlheaderid_array[*lasfvlhid].lasf_hid].lasfh;
+  lasffp = lasfid_array[lasfvlheaderid_array[*lasfvlhid].lasf_id].las_file;
+
+  fseek(lasffp, seekn , SEEK_SET);
+
+  char vlrec[vlreclen];
+  status = fread(&vlrec, sizeof(vlrec), 1, lasffp);
+  printf("----\n");
+  printf("%s\n",vlrec);
+  printf("----\n");
+  rewind(lasffp);
+
+  if (!status) {
+    lasf_file_status(&status, "Failed to read vl header.", "");
+    return status;
+  }
+  
+  return lasf_NOERR;
+}
 
 int
 lasf_read_byte_write_byte(int* lasfid, int* lasfid_out, int bn) {
