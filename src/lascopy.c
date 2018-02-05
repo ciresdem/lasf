@@ -126,6 +126,7 @@ main (argc, argv)
     inflag++;
     optind++;
     if (inflag > 0) {
+      
       // output filename
       char *ret = malloc(strlen(fn) + 4);
       strncpy(ret, fn, strlen(fn) - 4);

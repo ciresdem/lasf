@@ -38,7 +38,7 @@
 #define MAX_VL_HEADERS MAX_LAS_FILES
 #define MAX_STATUS MAX_LAS_FILES
 
-#define MAX_HULLS 1000
+#define MAX_LEGACY_POINTS UNIT32_MAX
 
 #ifdef NAN
 #define lasf_NAN  NAN
@@ -298,7 +298,6 @@ typedef struct {
   char scanrank;
   unsigned char udata;
   unsigned short psrcid;
-  //struct lasf_pnts0 *next;
 } lasf_pnts0;
 
 // The LAS Point Structure version 1
@@ -361,12 +360,12 @@ typedef struct {
   unsigned short psrcid;
   double gpstime;
   unsigned char wavedesc;
-  unsigned int waveoffset;
+  unsigned long int waveoffset;
   unsigned int wavepacksize;
-  double wavereturn;
-  double x_t;
-  double y_t;
-  double z_t;
+  float wavereturn;
+  float x_t;
+  float y_t;
+  float z_t;
 } lasf_pnts4;
 
 // The LAS Point Structure version 5
@@ -385,12 +384,12 @@ typedef struct {
   unsigned short green;
   unsigned short blue;
   unsigned char wavedesc;
-  unsigned int waveoffset;
+  unsigned long int waveoffset;
   unsigned int wavepacksize;
-  double wavereturn;
-  double x_t;
-  double y_t;
-  double z_t;
+  float wavereturn;
+  float x_t;
+  float y_t;
+  float z_t;
 } lasf_pnts5;
 
 
@@ -456,12 +455,12 @@ typedef struct {
   unsigned short psrcid;
   double gpstime;
   unsigned char wavedesc;
-  unsigned int waveoffset;
+  unsigned long int waveoffset;
   unsigned int wavepacksize;
-  double wavereturn;
-  double x_t;
-  double y_t;
-  double z_t;
+  float wavereturn;
+  float x_t;
+  float y_t;
+  float z_t;
 } lasf_pnts9;
 
 // The LAS Point Structure version 10
@@ -470,7 +469,7 @@ typedef struct {
   int y;
   int z;
   unsigned short intensity;
-  unsigned char returns;
+  unsigned short returns;
   unsigned char classification;
   unsigned char udata;
   short scanrank;
@@ -481,12 +480,12 @@ typedef struct {
   unsigned short blue;
   unsigned short NIR;
   unsigned char wavedesc;
-  unsigned int waveoffset;
+  unsigned long int waveoffset;
   unsigned int wavepacksize;
-  double wavereturn;
-  double x_t;
-  double y_t;
-  double z_t;
+  float wavereturn;
+  float x_t;
+  float y_t;
+  float z_t;
 } lasf_pnts;
 
 // lasf Structs

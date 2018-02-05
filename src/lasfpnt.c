@@ -758,19 +758,18 @@ lasf_write_v0point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z,sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification,sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return  lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -804,20 +803,19 @@ lasf_write_v1point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z,sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification,sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -851,22 +849,21 @@ lasf_write_v2point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.red = lasf_ptbuff->red;
-  lasf_ptbuff0.green = lasf_ptbuff->green;
-  lasf_ptbuff0.blue = lasf_ptbuff->blue;
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z,sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification,sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->red, sizeof(lasf_ptbuff0.red), 1, lasout);
+  status = fwrite(&lasf_ptbuff->green, sizeof(lasf_ptbuff0.green), 1, lasout);
+  status = fwrite(&lasf_ptbuff->blue, sizeof(lasf_ptbuff0.blue), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return  lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -900,24 +897,22 @@ lasf_write_v3point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
-  lasf_ptbuff0.red = lasf_ptbuff->red;
-  lasf_ptbuff0.green = lasf_ptbuff->green;
-  lasf_ptbuff0.blue = lasf_ptbuff->blue;
-  
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z, sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification, sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
+  status = fwrite(&lasf_ptbuff->red, sizeof(lasf_ptbuff0.red), 1, lasout);
+  status = fwrite(&lasf_ptbuff->green, sizeof(lasf_ptbuff0.green), 1, lasout);
+  status = fwrite(&lasf_ptbuff->blue, sizeof(lasf_ptbuff0.blue), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return  lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -951,27 +946,26 @@ lasf_write_v4point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
-  lasf_ptbuff0.wavedesc = lasf_ptbuff->wavedesc;
-  lasf_ptbuff0.waveoffset = lasf_ptbuff->waveoffset;
-  lasf_ptbuff0.wavepacksize = lasf_ptbuff->wavepacksize;
-  lasf_ptbuff0.wavereturn = lasf_ptbuff->wavereturn;
-  lasf_ptbuff0.x_t = lasf_ptbuff->x_t;
-  lasf_ptbuff0.y_t = lasf_ptbuff->y_t;
-  lasf_ptbuff0.z_t = lasf_ptbuff->z_t;
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z, sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification, sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavedesc, sizeof(lasf_ptbuff0.wavedesc), 1, lasout);
+  status = fwrite(&lasf_ptbuff->waveoffset, sizeof(lasf_ptbuff0.waveoffset), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavepacksize, sizeof(lasf_ptbuff0.wavepacksize), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavereturn, sizeof(lasf_ptbuff0.wavereturn), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x_t, sizeof(lasf_ptbuff0.x_t), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y_t, sizeof(lasf_ptbuff0.y_t), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z_t, sizeof(lasf_ptbuff0.z_t), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -1005,30 +999,29 @@ lasf_write_v5point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
-  lasf_ptbuff0.red = lasf_ptbuff->red;
-  lasf_ptbuff0.green = lasf_ptbuff->green;
-  lasf_ptbuff0.blue = lasf_ptbuff->blue;
-  lasf_ptbuff0.wavedesc = lasf_ptbuff->wavedesc;
-  lasf_ptbuff0.waveoffset = lasf_ptbuff->waveoffset;
-  lasf_ptbuff0.wavepacksize = lasf_ptbuff->wavepacksize;
-  lasf_ptbuff0.wavereturn = lasf_ptbuff->wavereturn;
-  lasf_ptbuff0.x_t = lasf_ptbuff->x_t;
-  lasf_ptbuff0.y_t = lasf_ptbuff->y_t;
-  lasf_ptbuff0.z_t = lasf_ptbuff->z_t;
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z, sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification, sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
+  status = fwrite(&lasf_ptbuff->red, sizeof(lasf_ptbuff0.red), 1, lasout);
+  status = fwrite(&lasf_ptbuff->green, sizeof(lasf_ptbuff0.green), 1, lasout);
+  status = fwrite(&lasf_ptbuff->blue, sizeof(lasf_ptbuff0.blue), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavedesc, sizeof(lasf_ptbuff0.wavedesc), 1, lasout);
+  status = fwrite(&lasf_ptbuff->waveoffset, sizeof(lasf_ptbuff0.waveoffset), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavepacksize, sizeof(lasf_ptbuff0.wavepacksize), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavereturn, sizeof(lasf_ptbuff0.wavereturn), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x_t, sizeof(lasf_ptbuff0.x_t), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y_t, sizeof(lasf_ptbuff0.y_t), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z_t, sizeof(lasf_ptbuff0.z_t), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return  lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -1062,21 +1055,19 @@ lasf_write_v6point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z, sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification, sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
   
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
-
   if (status == 1) {
-    return status;
+    return  lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -1110,24 +1101,22 @@ lasf_write_v7point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
-  lasf_ptbuff0.red = lasf_ptbuff->red;
-  lasf_ptbuff0.green = lasf_ptbuff->green;
-  lasf_ptbuff0.blue = lasf_ptbuff->blue;
-  
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z, sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification, sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
+  status = fwrite(&lasf_ptbuff->red, sizeof(lasf_ptbuff0.red), 1, lasout);
+  status = fwrite(&lasf_ptbuff->green, sizeof(lasf_ptbuff0.green), 1, lasout);
+  status = fwrite(&lasf_ptbuff->blue, sizeof(lasf_ptbuff0.blue), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return  lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -1161,24 +1150,23 @@ lasf_write_v8point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
-  lasf_ptbuff0.red = lasf_ptbuff->red;
-  lasf_ptbuff0.green = lasf_ptbuff->green;
-  lasf_ptbuff0.blue = lasf_ptbuff->blue;
-  lasf_ptbuff0.NIR = lasf_ptbuff->NIR;
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z, sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification, sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
+  status = fwrite(&lasf_ptbuff->red, sizeof(lasf_ptbuff0.red), 1, lasout);
+  status = fwrite(&lasf_ptbuff->green, sizeof(lasf_ptbuff0.green), 1, lasout);
+  status = fwrite(&lasf_ptbuff->blue, sizeof(lasf_ptbuff0.blue), 1, lasout);
+  status = fwrite(&lasf_ptbuff->NIR, sizeof(lasf_ptbuff0.NIR), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return  lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -1212,29 +1200,26 @@ lasf_write_v9point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  lasf_ptbuff0.x = lasf_ptbuff->x;
-  lasf_ptbuff0.y = lasf_ptbuff->y;
-  lasf_ptbuff0.z = lasf_ptbuff->z;
-  lasf_ptbuff0.intensity = lasf_ptbuff->intensity;
-  lasf_ptbuff0.returns = lasf_ptbuff->returns;
-  lasf_ptbuff0.classification = lasf_ptbuff->classification;
-  lasf_ptbuff0.scanrank = lasf_ptbuff->scanrank;
-  lasf_ptbuff0.udata = lasf_ptbuff->udata;
-  lasf_ptbuff0.psrcid = lasf_ptbuff->psrcid;
-  lasf_ptbuff0.gpstime = lasf_ptbuff->gpstime;
-  lasf_ptbuff0.wavedesc = lasf_ptbuff->wavedesc;
-  lasf_ptbuff0.waveoffset = lasf_ptbuff->waveoffset;
-  lasf_ptbuff0.wavepacksize = lasf_ptbuff->wavepacksize;
-  lasf_ptbuff0.wavereturn = lasf_ptbuff->wavereturn;
-  lasf_ptbuff0.x_t = lasf_ptbuff->x_t;
-  lasf_ptbuff0.y_t = lasf_ptbuff->y_t;
-  lasf_ptbuff0.z_t = lasf_ptbuff->z_t;
-
-  
-  status = fwrite(&lasf_ptbuff0,  sizeof(lasf_ptbuff0), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z, sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification, sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavedesc, sizeof(lasf_ptbuff0.wavedesc), 1, lasout);
+  status = fwrite(&lasf_ptbuff->waveoffset, sizeof(lasf_ptbuff0.waveoffset), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavepacksize, sizeof(lasf_ptbuff0.wavepacksize), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavereturn, sizeof(lasf_ptbuff0.wavereturn), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x_t, sizeof(lasf_ptbuff0.x_t), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y_t, sizeof(lasf_ptbuff0.y_t), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z_t, sizeof(lasf_ptbuff0.z_t), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return  lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -1248,7 +1233,7 @@ lasf_write_v10point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) 
   lasf_header lasfh;
   int status;
 
-  //lasf_pnts lasf_ptbuff0;
+  lasf_pnts lasf_ptbuff0;
 
   if (lasfid_array_cnt == 0) {
     lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
@@ -1268,10 +1253,30 @@ lasf_write_v10point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) 
     fseek(lasout, seekn, SEEK_SET);
   }
 
-  status = fwrite(&lasf_ptbuff,  sizeof(lasf_ptbuff), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x, sizeof(lasf_ptbuff0.x), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y, sizeof(lasf_ptbuff0.y), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z, sizeof(lasf_ptbuff0.z), 1, lasout);
+  status = fwrite(&lasf_ptbuff->intensity, sizeof(lasf_ptbuff0.intensity), 1, lasout);
+  status = fwrite(&lasf_ptbuff->returns, sizeof(lasf_ptbuff0.returns), 1, lasout);
+  status = fwrite(&lasf_ptbuff->classification, sizeof(lasf_ptbuff0.classification), 1, lasout);
+  status = fwrite(&lasf_ptbuff->udata, sizeof(lasf_ptbuff0.udata), 1, lasout);
+  status = fwrite(&lasf_ptbuff->scanrank, sizeof(lasf_ptbuff0.scanrank), 1, lasout);
+  status = fwrite(&lasf_ptbuff->psrcid, sizeof(lasf_ptbuff0.psrcid), 1, lasout);
+  status = fwrite(&lasf_ptbuff->gpstime, sizeof(lasf_ptbuff0.gpstime), 1, lasout);
+  status = fwrite(&lasf_ptbuff->red, sizeof(lasf_ptbuff0.red), 1, lasout);
+  status = fwrite(&lasf_ptbuff->green, sizeof(lasf_ptbuff0.green), 1, lasout);
+  status = fwrite(&lasf_ptbuff->blue, sizeof(lasf_ptbuff0.blue), 1, lasout);
+  status = fwrite(&lasf_ptbuff->NIR, sizeof(lasf_ptbuff0.NIR), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavedesc, sizeof(lasf_ptbuff0.wavedesc), 1, lasout);
+  status = fwrite(&lasf_ptbuff->waveoffset, sizeof(lasf_ptbuff0.waveoffset), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavepacksize, sizeof(lasf_ptbuff0.wavepacksize), 1, lasout);
+  status = fwrite(&lasf_ptbuff->wavereturn, sizeof(lasf_ptbuff0.wavereturn), 1, lasout);
+  status = fwrite(&lasf_ptbuff->x_t, sizeof(lasf_ptbuff0.x_t), 1, lasout);
+  status = fwrite(&lasf_ptbuff->y_t, sizeof(lasf_ptbuff0.y_t), 1, lasout);
+  status = fwrite(&lasf_ptbuff->z_t, sizeof(lasf_ptbuff0.z_t), 1, lasout);
 
   if (status == 1) {
-    return status;
+    return lasf_NOERR;
   }
   else {
     lasf_file_status(&status, "Failed to write point", "");
@@ -1342,7 +1347,7 @@ lasf_write_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
     status = lasf_write_v10point(lasfid, lasfhid, seekn, &lasf_ptbuff0);
     break;
   }  
-  if (status == 1) {
+  if (status == lasf_NOERR) {
     return lasf_NOERR;
   }
   else {
