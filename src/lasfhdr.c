@@ -992,22 +992,16 @@ lasf_open_vlheader(int* lasfid, int* lasfhid, int* lasfvlhid, int seekn) {
   lasf_header lasf_hbuffer;
   lasf_vlheader lasf_vlhbuffer;
   lasf_vlheaderid lfvlhid;
-  unsigned char vermajor;
-  unsigned char verminor;
-  int versum, status, cseekn, i;
+  unsigned short vlreclen;
+  int status, cseekn, i;
   
   if (lasfid_array_cnt == 0) {
     lasf_file_status(&status, "There is currently no valid LAS file loaded from which to open a header", "");
     return status;
   }
 
-  unsigned short vlreclen;
-
   lasf_get_header(lasfhid,  &lasf_hbuffer);
   
-  vermajor = lasfid_array[*lasfid].vermajor;
-  verminor = lasfid_array[*lasfid].verminor;
-  versum = vermajor + verminor;
   fp = lasfid_array[*lasfid].las_file;
 
   if (! fp) {
@@ -1020,7 +1014,6 @@ lasf_open_vlheader(int* lasfid, int* lasfhid, int* lasfvlhid, int seekn) {
     return status;
   }
   
-  vlreclen = 0;
   cseekn = lasf_hbuffer.headersize;
   
   for (i = 0; i < seekn + 1; i++) {
@@ -1079,7 +1072,6 @@ int
 lasf_print_vldata(int* lasfvlhid)
 {
   int status, seekn;
-  lasf_header lasfh;
   lasf_vlheader lasfvlh;
   unsigned short vlreclen;
   FILE* lasffp;
@@ -1091,7 +1083,6 @@ lasf_print_vldata(int* lasfvlhid)
   lasfvlh = lasfvlheaderid_array[*lasfvlhid].lasfvlh;
   seekn = lasfvlheaderid_array[*lasfvlhid].data_offset;
   vlreclen = lasfvlh.recordlen;
-  lasfh = lasfheaderid_array[lasfvlheaderid_array[*lasfvlhid].lasf_hid].lasfh;
   lasffp = lasfid_array[lasfvlheaderid_array[*lasfvlhid].lasf_id].las_file;
 
   fseek(lasffp, seekn , SEEK_SET);

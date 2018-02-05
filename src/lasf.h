@@ -573,15 +573,6 @@ typedef struct {
 lasf_status lasfstatus_array[MAX_STATUS];
 int lasfstatus_array_cnt;
 
-typedef struct {
-  double x;
-  double y;
-}point_t;
-
-typedef struct {
-  point_t p1, p2;
-}line_t;
-
 /* 
    Functions
 */
