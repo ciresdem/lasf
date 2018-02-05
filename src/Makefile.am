@@ -1,6 +1,9 @@
 ## Directories
 bindir=${prefix}/bin
 
+## Headers
+include_HEADERS = lasf.h
+
 ## Libraries
 lib_LTLIBRARIES= liblasf.la
 liblasf_la_SOURCES = lasf.c lasfhdr.c lasfpnt.c lasf.h
