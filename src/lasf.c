@@ -189,3 +189,14 @@ lasf_print_error(int status, const char* bn) {
 
   return lasf_NOERR;
 }
+
+void get_string( char *buffer )
+{
+  char *ptr = buffer;
+  while( (*ptr = getchar( )) )
+    if( *ptr == '\n' )
+      break;
+    else if( ptr < buffer + MAXSTRING - 1 )
+      ptr++;
+  *ptr = '\0';
+}
