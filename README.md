@@ -1,17 +1,18 @@
-LASF
+## LASF
 
-LASFile C Library and Utilities
+### LASFile C Library and Utilities
 
 LASFile provides a C library and set of command-line utilities for utilizing the LAS 1.x file format.
 
 C Library:
 
--- Public Header: lasf.h
+- Public Header: lasf.h
 
 Utilities:
 
--- Command-Line Program: lasdump
+- Command-Line Program: `lasdump`
 
+```
 lasdump infile [Options]
 
   Dump the contents of an LAS file to stdout.
@@ -61,10 +62,11 @@ lasdump infile [Options]
 
   --help		Print this help menu and exit.
   --version		Print version information and exit.
+```
 
--- Command-Line Program: lasscan
+- Command-Line Program: `lasscan`
 
-
+```
   Print some information about the given LAS file(s) to stdout.
 
   infile(s)	The input LAS file(s) 
@@ -78,9 +80,11 @@ lasdump infile [Options]
 
   --help	Print this help menu and exit.
   --version	Print version information and exit.
+```
 
--- Command-Line Program: lascopy
+- Command-Line Program: `lascopy`
 
+```
   Copy the given LAS file to an LAS file.  The default will output a 
   file version 1.4 with point record version 10.
 
@@ -94,4 +98,4 @@ lasdump infile [Options]
  
   --help	Print this help menu and exit.
   --version	Print version information and exit.
-
+```
