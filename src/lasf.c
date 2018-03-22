@@ -2,7 +2,7 @@
  *
  * lasf.c - some generic functions for LAS files
  *
- * Copyright (C) 2010-2018 Matthew Love <matthew.love@colorado.edu>
+ * Copyright (C) 2010, 2011, 2012, 2013, 2016, 2017, 2018 Matthew Love
  *
  * This file is liscensed under the GPL v.2 or later and
  * is distributed in the hope that it will be useful,
@@ -164,7 +164,7 @@ lasf_strerror(int status) {
 void
 lasf_print_version(const char* command_name, const char* command_version) {
   fprintf(stderr, "%s version %s (%s)\n\
-Copyright (C) 2010-2016 Matthew Love <matthew.love@colorado.edu> \n\
+Copyright (C) 2010, 2011, 2012, 2013, 2016, 2017, 2018 Matthew Love \n\
 LASFile (lasf) is liscensed under the GPL v.2 or later and is \n\
 distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;\n\
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A\n\

@@ -1,10 +1,10 @@
 /* ---------------------------------------------------------------
  *
- * Generic LAS Toolkit
+ * LASFile
  *
  * lasf.h
  *
- * Copyright (C) 2010-2018 Matthew Love <matthew.love@colorado.edu>
+ * Copyright (C) 2010, 2011, 2012, 2013, 2016, 2017, 2018 Matthew Love
  *
  * This file is liscensed under the GPL v.2 or later and
  * is distributed in the hope that it will be useful,
