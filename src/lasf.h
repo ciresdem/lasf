@@ -33,6 +33,7 @@
  * Max Array Sizes
  * Adjust values here if needed
  */
+#define MAXSTRING (100 * 1024 * 1024)
 #define MAX_LAS_FILES 5000
 #define MAX_HEADERS MAX_LAS_FILES
 #define MAX_VL_HEADERS MAX_LAS_FILES
