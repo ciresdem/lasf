@@ -729,6 +729,59 @@ lasf_read_point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
   }
 }
 
+size_t
+lasf_read_point_value(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff, char* lasf_v) {
+  lasf_header lasf_hbuffer;
+  int status, pf_length, j;
+  char lasfp;
+
+  lasf_pnts lasf_ptbuff1;
+
+  if (lasfid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file to write to", "");
+    return status;
+  }
+
+  if (lasfheaderid_array_cnt == 0) {
+    lasf_file_status(&status, "There is currently no valid LAS file header open", "");
+    return status;
+  }
+  
+  lasf_hbuffer = lasfheaderid_array[ lasfhid ].lasfh;
+
+  pf_length = strlen(lasf_v);
+
+  for (j = 0; j < pf_length; j++) {
+    lasfp = lasf_v[j];
+    if (lasfp == 'x') {
+    }
+    else if (lasfp == 'y') {
+    }
+    else if (lasfp == 'z') {
+    }
+    else if (lasfp == 'i') {
+    }
+    else if (lasfp == 'n') {
+    }
+    else if (lasfp == 'c') {
+	      }
+    else if (lasfp == 's') {
+    }
+    else if (lasfp == 'u') {
+    }
+    else if (lasfp == 'p') {
+    }
+    else if (lasfp == 't') {
+    }
+    else if (lasfp == 'X') {
+    }
+    else if (lasfp == 'Y') {
+    }
+    else if (lasfp == 'Z') {
+    }
+  }
+}
+
 int
 lasf_write_v0point(int lasfid, int lasfhid, int seekn, lasf_pnts* lasf_ptbuff) {
   FILE *lasout;

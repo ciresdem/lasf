@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([lasf], [1.4.0], [matthew.love@colorado.edu])
+AC_INIT([lasf], [1.4.1], [matthew.love@colorado.edu])
 AC_CONFIG_AUX_DIR([./config])
 AM_INIT_AUTOMAKE([-Wall -Werror])
 AC_CONFIG_MACRO_DIR([m4])
@@ -24,5 +24,5 @@ AC_CHECK_LIB([m], fabs, [], [
 
 AC_CHECK_HEADERS([stdlib.h string.h float.h])
 
-AC_CONFIG_FILES([Makefile src/Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile utils/Makefile])
 AC_OUTPUT
