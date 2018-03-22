@@ -2,7 +2,6 @@
 bindir=${prefix}/bin
 
 ## C Programs
-#bin_PROGRAMS = lasdescribe lasdump lasreformat lasselect lasblock lasconvexhull las2xy lasfilter lasbounds las2ogr las2grd
 bin_PROGRAMS = lasdump lascopy lasscan 
 #las2grd lasbounds las2ogr lasfilter
 
