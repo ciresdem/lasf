@@ -4,6 +4,14 @@ LASFile C Library and Utilities
 
 LASFile provides a C library and set of command-line utilities for utilizing the LAS 1.x file format.
 
+To Install:
+run:
+
+autoreconf -vif
+./configure
+make
+sudo make install
+
 C Library:
 
 -- Public Header: lasf.h
