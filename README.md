@@ -6,7 +6,7 @@ LASFile provides a C library and set of command-line utilities for utilizing the
 
 C Library:
 
-- Public Header: lasf.h
+- Public Header: `lasf.h`
 
 Utilities:
 
