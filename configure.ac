@@ -22,7 +22,13 @@ AC_CHECK_LIB([m], fabs, [], [
 		  echo "Math library is required..."
 		  exit -1])
 
-AC_CHECK_HEADERS([stdlib.h string.h float.h])
+AC_CHECK_HEADERS([stdlib.h string.h math. float.h])
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_TYPE_SIZE_T
+
+# Checks for library functions.
+AC_FUNC_MALLOC
 
 AC_CONFIG_FILES([Makefile src/Makefile utils/Makefile])
 AC_OUTPUT
