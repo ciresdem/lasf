@@ -200,3 +200,15 @@ void get_string( char *buffer )
       ptr++;
   *ptr = '\0';
 }
+
+inline void
+lasf_printf_progress( int i, int i_total, const char* bn) {
+  float ifl, iflt;
+  ifl = i;
+  iflt = i_total;
+  float idiff = ifl/iflt;
+  //if (fmod(idiff*100, 1) == 0) {
+  fprintf(stderr, "%s: %.0f\%\r", bn, idiff * 100);
+  fflush(stderr);
+  //}
+}

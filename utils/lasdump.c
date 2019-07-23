@@ -14,7 +14,7 @@
  *----------------------------------------------------------------*/
 
 #include<getopt.h>
-#include "lasf.h"
+#include "../src/lasf.h"
 
 #define LASDUMP_VERSION "0.2.1"
 

@@ -14,14 +14,16 @@
  *----------------------------------------------------------------*/
 
 #include<getopt.h>
-#include<lasf.h>
 #include<gdal/ogr_api.h>
+#include "../src/lasf.h" 
 
-#define LASFILTER_VERSION "0.3.3"
+#define LASFILTER_VERSION "0.3.4"
 
 /* Flags set by `--version' and `--help' */
 int version_flag;
 int help_flag;
+
+GDALProgressFunc prog = GDALTermProgress;
 
 typedef struct {
   double x;
@@ -52,7 +54,7 @@ lasf_intersect(line_t l1, line_t l2, float thresh) {
 }
 
 int
-lasf_ogr_inside(point_t* p1, OGRLayerH hLayer) {
+lasf_ogr_inside2(point_t* p1, OGRLayerH hLayer) {
   int k = 0, l, j, jj, j0, j1, i, fCount, gCount;
   line_t lt, lp;
   OGRFeatureH hFeature;
@@ -92,6 +94,31 @@ lasf_ogr_inside(point_t* p1, OGRLayerH hLayer) {
 }
 
 int
+lasf_ogr_inside(point_t* p1, OGRLayerH hLayer) {
+  int h, t;
+  OGRFeatureH hFeature;
+  OGRGeometryH hGeometry, hPt;
+  
+  OGR_L_ResetReading(hLayer);
+
+  t = OGR_L_GetFeatureCount(hLayer, FALSE);
+  if (t == -1) t = 1;
+  hPt = OGR_G_CreateGeometry(wkbPoint);
+  OGR_G_SetPoint(hPt, 0, p1->x, p1->y, 0);
+  for (h = 0; h < t; h++) { 
+    hFeature = OGR_L_GetFeature(hLayer,h);
+    hGeometry = OGR_F_GetGeometryRef(hFeature);
+    if (OGR_G_Within(hPt, hGeometry)) {
+      OGR_F_Destroy(hFeature);
+      return 1;
+    }
+    OGR_F_Destroy(hFeature);
+  }
+  OGR_G_DestroyGeometry(hPt);
+  return 0;
+}
+
+int
 lasf_point_in_region_p(char* las_region, int* lasfhid, lasf_pnts lasfp) {
   int i, status, rflag=0;
   double in_region[4];
@@ -125,64 +152,60 @@ lasf_point_in_region_p(char* las_region, int* lasfhid, lasf_pnts lasfp) {
 void 
 usage() {
   fprintf(stderr, "\
-lasfilter infile(s) [Options]\n\n\
-  Perform a various reclassification filters on the given LAS file(s).\n\
+lasfilter [OPTION]... [LASFILE]\n\n\
+  Perform a various reclassification filters on the given [LASFILE].\n\
 \n\
-  infile(s)\tThe input LAS file(s) \n\
-\n\
- Options:\n\
   -c, --classification\tInput classification(s); separate values \n\
 \t\t\twith a '/'; e.g. -c 2/9/11 to select classes 2, 9 and 11.\n\
 \t\t\tLeave blank to specify all classificatins as input\n\
   -p, --polygon\t\tSpecify an input OGR supported vector file. Only points within the\n\
 \t\t\tgiven polygon will be filtered.\n\
-  -r, --region\t\tSelect by region; The region should be formated as:\n\
+  -b, --bounding-box\tSelect by region; The region should be formated as:\n\
 \t\t\tminX/maxX/minY/maxY, using a '/' as a separater.\n\
   -f, --filter\t\tThe desired filter to use. Separate filter option\n\
               \t\tvalues with a \":\"(e.g. 1:10:1 to use the \"Min-Block\"\n\
               \t\tfilter with a block size of 10 and a diffval of 1)\n\
-     Current Filters:\n\n\
-   0: Reclassify Filter - Reclassify the specified points to the given classification.\n\
-     Options:\n\
-      (int) The desired output classification value (between 0 and 32).\n\n\
-   1: \"Min-Block\" Ground Filter - Classify the specified points as ground (2) based on their relative\n\
-                                  height compared to the minimum value in each respective block\n\
-     Options:\n\
-      (double) The desired blocking increment. [should be in the same \n\
-               units and the input data]\n\
-      (double) The maximum difference value.\n\n\
-   2: \"Mean-Block\" Ground Filter - Classify the specified points as ground (2) based on their relative\n\
-                                   height compared to the mean value in each respective block.\n\
-     Options:\n\
-      (double) The desired blocking increment. [should be in the same \n\
-               units as the input data]\n\
-      (double) The maximum difference value.\n\n\
-   3: Height Filter - Reclassify points to the given classification which are above or below the \n\
-                      specified height value.\n\
-     Options:\n\
-      (int)    Lower/Higher (specify 0 if you want to reclassify points below the the given height \n\
-               value and 1 to reclassify points above the given height value.)\n\
-      (double) The desired height value.\n\
-      (int)    The desired output classification value (between 0 and 32).\n\n\
-   4: Intensity Filter - Reclassify points to the given classification which are within the range of \n\
-                         the specified intensity values \n\
-     Options:\n\
-      (int)    The lower range intensity value. \n\
-      (int)    The upper range intensity value. \n\
-      (int)    The desired output classification value (between 0 and 32).\n\n\
-   5: Density Filter - Reclassify points to the given classification based on the density of the \n\
-                       given block size.\n\
-     Options:\n\
-      (double) The desired blocking increment. [should be in the same \n\
-               units as the input data]\n\
-      (int)    Lower/Higher (specify 0 if you want to reclassify points below the the given density \n\
-               value and 1 to reclassify points above the given density value.)\n\
-      (double) The desired density value.\n\
-      (int)    The desired output classification value (between 0 and 32).\n\n\
-     Note: Use -c to specify which points to consider in filtering, default considers all points.\n\n\
-\n\
-  --help\tPrint this help menu and exit.\n\
-  --version\tPrint version information and exit.\n\n\
+      --help\tPrint this help menu and exit.\n\
+      --version\tPrint version information and exit.\n\n\
+Filters:\n\n\
+ 0: Reclassify Filter - Reclassify the specified points to the given classification.\n\
+   Options:\n\
+    (int) The desired output classification value (between 0 and 32).\n\n\
+ 1: \"Min-Block\" Ground Filter - Classify the specified points as ground (2) based on their relative\n\
+                                height compared to the minimum value in each respective block\n\
+   Options:\n\
+    (double) The desired blocking increment. [should be in the same \n\
+             units and the input data]\n\
+    (double) The maximum difference value.\n\n\
+ 2: \"Mean-Block\" Ground Filter - Classify the specified points as ground (2) based on their relative\n\
+                                 height compared to the mean value in each respective block.\n\
+   Options:\n\
+    (double) The desired blocking increment. [should be in the same \n\
+             units as the input data]\n\
+    (double) The maximum difference value.\n\n\
+ 3: Height Filter - Reclassify points to the given classification which are above or below the \n\
+                    specified height value.\n\
+   Options:\n\
+    (int)    Lower/Higher (specify 0 if you want to reclassify points below the the given height \n\
+             value and 1 to reclassify points above the given height value.)\n\
+    (double) The desired height value.\n\
+    (int)    The desired output classification value (between 0 and 32).\n\n\
+ 4: Intensity Filter - Reclassify points to the given classification which are within the range of \n\
+                       the specified intensity values \n\
+   Options:\n\
+    (int)    The lower range intensity value. \n\
+    (int)    The upper range intensity value. \n\
+    (int)    The desired output classification value (between 0 and 32).\n\n\
+ 5: Density Filter - Reclassify points to the given classification based on the density of the \n\
+                     given block size.\n\
+   Options:\n\
+    (double) The desired blocking increment. [should be in the same \n\
+             units as the input data]\n\
+    (int)    Lower/Higher (specify 0 if you want to reclassify points below the the given density \n\
+             value and 1 to reclassify points above the given density value.)\n\
+    (double) The desired density value.\n\
+    (int)    The desired output classification value (between 0 and 32).\n\n\
+   Note: Use -c to specify which points to consider in filtering, default considers all points.\n\n\
 ");
   exit(1);
 }
@@ -232,16 +255,16 @@ lasf_reclassify_fltr(int* lasfid, int* lasfhid, char* lasf_clr, char* lasf_regio
   }
   if (!(strlen(lasf_region) == 0)) rflag++;
 
-  fprintf(stderr,"cflag: %d\n", cflag);
-  fprintf(stderr,"pflag: %d\n", pflag);
-  fprintf(stderr,"rflag: %d\n", rflag);
+  /* fprintf(stderr,"cflag: %d\n", cflag); */
+  /* fprintf(stderr,"pflag: %d\n", pflag); */
+  /* fprintf(stderr,"rflag: %d\n", rflag); */
 
   /* 
    * Loop through the point records and reclassify accordingly 
    */
   i = 0, n = 0;
   while (lasf_read_point(*lasfid, *lasfhid, n, &lasf_ptbuff) == lasf_NOERR) {
-    //lasf_printf_progress(abs(n), lasf_hbuffer.numptrecords);
+    //fprintf(stderr,"%f\n",(i/lasf_hbuffer.numptrecords));
 
     /* 
      * If the select-by-classification flag is set, check if to print 
@@ -258,7 +281,7 @@ lasf_reclassify_fltr(int* lasfid, int* lasfhid, char* lasf_clr, char* lasf_regio
       p1.x = lasf_ptbuff.x * lasf_hbuffer.xscale + lasf_hbuffer.xoffset;
       p1.y = lasf_ptbuff.y * lasf_hbuffer.yscale + lasf_hbuffer.yoffset;
       if (lasf_ogr_inside(&p1, hLayer)) printflag++;
-      fprintf(stderr,"printflag: %d\n", printflag);
+      //fprintf(stderr,"printflag: %d\n", printflag);
     }
 
     /* 
@@ -280,6 +303,15 @@ lasf_reclassify_fltr(int* lasfid, int* lasfhid, char* lasf_clr, char* lasf_regio
     }
     printflag = 0;
     i++, n--;
+    
+    /*
+     * Term Progress
+     */
+    float ifl = i;
+    float iflt = lasf_hbuffer.numptrecords;
+    float iprog = ifl/iflt;
+    prog(iprog,"done",NULL);
+    //lasf_printf_progress(i, lasf_hbuffer.numptrecords, "lasfilter");
   }
   return(0);
 }

@@ -781,7 +781,7 @@ const char*
 lasf_strerror(int status);
 
 void 
-lasf_printf_progress(int x, int n);
+lasf_printf_progress(int x, int n, const char* bn);
 
 void
 lasf_print_version(const char* command_name, const char* command_version);

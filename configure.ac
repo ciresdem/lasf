@@ -14,15 +14,28 @@ else DYNAMIC_AG=""
 fi
 AC_SUBST(DYNAMIC_AG)
 
-AM_PROG_AR
 AC_PROG_CC
 AC_PROG_LIBTOOL
+
+AC_ARG_WITH([laszip_api],
+ 	AC_HELP_STRING([--with-laszip=path-to-laszip-dll], [Specify the location of laszip]), 
+ 	[ncloc=$withval
+ 	CFLAGS="$CFLAGS -I$ncloc/dll"
+ 	LDFLAGS="$LDFLAGS -L$ncloc/dll"])
 
 AC_CHECK_LIB([m], fabs, [], [
 		  echo "Math library is required..."
 		  exit -1])
 
-AC_CHECK_HEADERS([stdlib.h string.h math. float.h])
+AC_CHECK_LIB([gdal], OGROpen, [], [
+		  echo "GDAL library is required..."
+		  exit -1])
+
+dnl AC_CHECK_LIB([laszip_api], laszip_get_version, [], [
+dnl 		  echo "laszip library is required..."
+dnl  		  exit -1])
+
+AC_CHECK_HEADERS([stdlib.h string.h math.h float.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_SIZE_T
