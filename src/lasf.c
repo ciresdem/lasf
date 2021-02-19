@@ -15,6 +15,15 @@
 
 #include "lasf.h"
 
+lasf_id lasfid_array[MAX_LAS_FILES];
+lasf_headerid lasfheaderid_array[MAX_HEADERS];
+lasf_vlheaderid lasfvlheaderid_array[MAX_VL_HEADERS];
+lasf_status lasfstatus_array[MAX_STATUS];
+int lasfid_array_cnt = 0;
+int lasfheaderid_array_cnt = 0;
+int lasfvlheaderid_array_cnt = 0;
+int lasfstatus_array_cnt = 0;
+
 /* 
  *LAS-file-p -- returns 0 if the input file 
  * appears to be an LAS file 
@@ -30,6 +39,7 @@ lasf_lasf_p(const char *fn) {
     fseek(fp, 0, SEEK_SET);
     fread(&lasf, sizeof(lasf), 1, fp);
     fclose(fp);
+    fprintf(stderr, "lasf[0]: %s", lasf[0]);
     if (lasf[0] == 'L' && lasf[1] == 'A' && lasf[2] == 'S' && lasf[3] == 'F') {
       return lasf_NOERR;
     }
@@ -69,7 +79,7 @@ lasf_open(const char *fn, int* lasfid, int omode) {
     fread(&vermajor, sizeof(verminor), 1, fp);
     fread(&verminor, sizeof(verminor), 1, fp);
     rewind(fp);
-    
+
     // Set the lasf-id values
     lfid.id = lasfid_array_cnt;
     lfid.lasfn = (char *)fn;
@@ -82,7 +92,6 @@ lasf_open(const char *fn, int* lasfid, int omode) {
     *lasfid = lasfid_array_cnt;
     lasfid_array[lasfid_array_cnt] = lfid;
     lasfid_array_cnt++;
-    
     return lasf_NOERR;
   }
   else {

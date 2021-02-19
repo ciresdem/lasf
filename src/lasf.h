@@ -15,6 +15,9 @@
  *
  * --------------------------------------------------------------*/
 
+#ifndef LASF_H
+#define LASF_H
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -538,8 +541,8 @@ typedef struct {
   FILE *las_file;
 }lasf_id;
 
-lasf_id lasfid_array[MAX_LAS_FILES];
-int lasfid_array_cnt;
+extern lasf_id lasfid_array[MAX_LAS_FILES];
+extern int lasfid_array_cnt;
 
 typedef struct {
   int id; // ID to locate struct.
@@ -547,8 +550,8 @@ typedef struct {
   lasf_header lasfh;
 }lasf_headerid;
 
-lasf_headerid lasfheaderid_array[MAX_HEADERS];
-int lasfheaderid_array_cnt;
+extern lasf_headerid lasfheaderid_array[MAX_HEADERS];
+extern int lasfheaderid_array_cnt;
 
 typedef struct {
   int id; // ID to locate struct.
@@ -558,8 +561,8 @@ typedef struct {
   lasf_vlheader lasfvlh;
 }lasf_vlheaderid;
 
-lasf_vlheaderid lasfvlheaderid_array[MAX_VL_HEADERS];
-int lasfvlheaderid_array_cnt;
+extern lasf_vlheaderid lasfvlheaderid_array[MAX_VL_HEADERS];
+extern int lasfvlheaderid_array_cnt;
 
 typedef struct {
   int laspid; // ID to locate struct.
@@ -571,8 +574,8 @@ typedef struct {
   const char* lasfn;
 }lasf_status;
 
-lasf_status lasfstatus_array[MAX_STATUS];
-int lasfstatus_array_cnt;
+extern lasf_status lasfstatus_array[MAX_STATUS];
+extern int lasfstatus_array_cnt;
 
 /* 
    Functions
@@ -785,3 +788,4 @@ lasf_printf_progress(int x, int n, const char* bn);
 
 void
 lasf_print_version(const char* command_name, const char* command_version);
+#endif

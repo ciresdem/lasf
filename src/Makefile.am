@@ -3,7 +3,7 @@ include_HEADERS = lasf.h
 
 ## Libraries
 lib_LTLIBRARIES= liblasf.la
-liblasf_la_SOURCES = lasf.c lasfhdr.c lasfpnt.c lasf.h
+liblasf_la_SOURCES = lasf.h lasf.c lasfhdr.c lasfpnt.c
 
 ## C Programs
 #bin_PROGRAMS = lasdump lascopy

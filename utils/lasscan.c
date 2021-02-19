@@ -126,7 +126,7 @@ main (int argc, char **argv) {
       }
 
       // Open the header
-      status = lasf_open_header( &lasfid, &lasfhid);
+      status = lasf_open_header(&lasfid, &lasfhid);
       if (status != lasf_NOERR) {
 	lasf_print_error(status, "lasscan");
 	exit(-1);
@@ -198,6 +198,8 @@ main (int argc, char **argv) {
 	  las_mm.returns[2] + las_mm.returns[3] + las_mm.returns[4];
 	if (retsum != las_mm.n)
 	  printf(" N/A( %d ) ", las_mm.n-retsum);
+
+	/* Classification Flags */
 
 	/* Classifications */
 	printf("\b>\n%s: Classifications: <", fn);
