@@ -2,14 +2,15 @@
 bindir=${prefix}/bin
 
 ## C Programs
-bin_PROGRAMS = lasdump lascopy lasscan lasfilter
+bin_PROGRAMS = lasdump lascopy lasscan lasfilter las2grd
 #las2grd lasbounds las2ogr lasfilter
 
 lasdump_SOURCES = lasdump.c
 lasdump_LDADD = ../src/liblasf.la
 lascopy_SOURCES = lascopy.c
 lascopy_LDADD = ../src/liblasf.la
-#las2grd_SOURCES = las2grd.c
+las2grd_SOURCES = las2grd.c
+las2grd_LDADD = ../src/liblasf.la
 lasscan_SOURCES = lasscan.c
 lasscan_LDADD = ../src/liblasf.la
 #lasbounds_SOURCES = lasbounds.c

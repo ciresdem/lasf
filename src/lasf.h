@@ -29,8 +29,8 @@
 
 #define lasf_VERMAJOR 1
 #define lasf_VERMINOR 4
-#define lasf_VERMICRO 1
-#define lasf_VERSION "lasf-1.4.2"
+#define lasf_VERMICRO 3
+#define lasf_VERSION "lasf-1.4.3"
 
 /*
  * Max Array Sizes

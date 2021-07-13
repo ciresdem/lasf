@@ -14,8 +14,10 @@
  *----------------------------------------------------------------*/
 
 #include<getopt.h>
-#include<lasf.h>
+//#include<lasf.h>
 #include<netcdf.h>
+
+#include "../src/lasf.h"
 
 #define LAS2GRD_VERSION "0.1.6"
 

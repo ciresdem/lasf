@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_INIT([lasf], [1.4.2], [matthew.love@colorado.edu])
+AC_INIT([lasf], [1.4.3], [matthew.love@colorado.edu])
 AC_CONFIG_AUX_DIR([./config])
 AM_INIT_AUTOMAKE([-Wall -Werror])
 AC_CONFIG_MACRO_DIR([m4])
@@ -27,8 +27,12 @@ AC_CHECK_LIB([m], fabs, [], [
 		  echo "Math library is required..."
 		  exit -1])
 
-AC_CHECK_LIB([gdal], OGROpen, [], [
-		  echo "GDAL library is required..."
+dnl AC_CHECK_LIB([gdal], OGROpen, [], [
+dnl 		  echo "GDAL library is required..."
+dnl 		  exit -1])
+		  
+AC_CHECK_LIB([netcdf], nc_put_att_text, [], [
+		  echo "netcdf library is required..."
 		  exit -1])
 
 dnl AC_CHECK_LIB([laszip_api], laszip_get_version, [], [
